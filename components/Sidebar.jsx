@@ -15,7 +15,7 @@ import {
   BlindsIcon,ApertureIcon,Lightbulb,
   BookOpen,
   ArrowUpRightFromCircleIcon,Sparkles,
-  ApertureIcon,BarChart3,
+  BarChart3,
 } from "lucide-react"
 import SidebarSection from "./SidebarSection"
 import ConversationRow from "./ConversationRow"
@@ -204,7 +204,6 @@ export default function Sidebar({
           >
             <BadgeHelpIcon className="h-5 w-5 text-[rgba(195,28,28,1)]" />
           </button>
-          {/* </CHANGE> */}
 
           <button
             className="rounded-xl p-2 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:hover:bg-zinc-800"
@@ -357,7 +356,6 @@ export default function Sidebar({
                   <span className="text-zinc-700 dark:text-zinc-300">帮助中心</span>
                 </button>
               </div>
-              {/* </CHANGE> */}
 
               <SidebarSection
                 icon={<Star className="h-4 w-4 text-[rgba(209,68,68,1)]" />}
