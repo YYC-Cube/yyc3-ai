@@ -154,7 +154,7 @@ const Composer = forwardRef(function Composer({ onSend, onSendMessage, busy }, r
           <SymmetricContent className="p-0 border border-zinc-200 dark:border-zinc-800">
             <div
               className={cls(
-                "flex items-end gap-2 p-3 transition-colors",
+                "flex items-end gap-2 p-3 transition-colors py-3",
                 isFocused && "ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-zinc-900",
               )}
               style={{ minHeight: `${composerHeight}px` }}

@@ -12,6 +12,7 @@ import LearningPathPlanner from "./LearningPathPlanner"
 import PromptTemplateManager from "./PromptTemplateManager"
 import HelpSystem from "./HelpSystem"
 import FloatingChat from "./FloatingChat"
+import BrandLogo from "./BrandLogo"
 import { useLocale } from "@/contexts/LocaleContext"
 
 export default function MainWorkspace() {
@@ -33,7 +34,9 @@ export default function MainWorkspace() {
   ]
 
   const tabClassName =
-    "group relative gap-2 rounded-lg px-3 py-2 text-sm transition-all data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-600 data-[state=inactive]:hover:bg-zinc-100 dark:data-[state=inactive]:text-zinc-400 dark:data-[state=inactive]:hover:bg-zinc-800"
+    "nav-item group relative gap-2 rounded-lg px-3 py-2 text-sm transition-all duration-200 " +
+    "data-[state=active]:bg-[hsl(var(--primary))] data-[state=active]:text-[hsl(var(--primary-foreground))] " +
+    "data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:bg-muted"
 
   const handleCodeChange = (code: string, language: string) => {
     setCurrentCode(code)
@@ -61,38 +64,37 @@ export default function MainWorkspace() {
   }, [])
 
   return (
-    <div className="h-screen w-full bg-zinc-50 dark:bg-zinc-950 flex flex-col overflow-hidden">
+    <div className="h-screen w-full bg-background flex flex-col overflow-hidden">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col">
-        <div className="border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shrink-0">
-          <div className="w-full px-4">
-            <div className="flex items-center justify-between py-3">
-              <div className="flex items-center gap-3">
+        <div className="h-16 border-b border-border bg-card shrink-0">
+          <div className="w-full h-full px-6">
+            <div className="flex items-center justify-between h-full">
+              <div className="flex items-center gap-4">
                 <FloatingChat />
-                <div>
-                  <h1 className="text-sm text-zinc-900 dark:text-zinc-100 font-medium">
-                    万象归元于云栈 | 深耕智启新纪元
-                  </h1>
-                </div>
+                <BrandLogo size="md" showText={true} />
               </div>
+
               <button
                 onClick={handleGithubDeploy}
-                className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100 transition-all hover:scale-105 active:scale-95"
+                className="btn-primary flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
                 title="一键部署到GitHub"
               >
-                <Github className="h-4 w-4" />
-                <span>部署</span>
+                <Github className="icon icon-button" />
+                <span className="font-medium">部署</span>
               </button>
             </div>
           </div>
+        </div>
 
-          <div className="w-full px-4">
-            <TabsList className="w-full justify-start h-12 rounded-none bg-transparent gap-1 border-t border-zinc-100 dark:border-zinc-800">
+        <div className="border-b border-border bg-card shrink-0">
+          <div className="w-full px-6">
+            <TabsList className="w-full justify-start h-12 rounded-none bg-transparent gap-2">
               {tabs.map((tab) => {
                 const IconComponent = tab.icon
                 return (
                   <TabsTrigger key={tab.value} value={tab.value} className={tabClassName}>
-                    <IconComponent className="h-4 w-4" />
-                    <span className="hidden group-hover:inline-block group-data-[state=active]:inline-block transition-all">
+                    <IconComponent className="icon icon-nav shrink-0" />
+                    <span className="hidden group-hover:inline-block group-data-[state=active]:inline-block transition-all text-sm">
                       {tab.label}
                     </span>
                   </TabsTrigger>
@@ -131,12 +133,12 @@ export default function MainWorkspace() {
             <div className="h-full flex">
               <div className="flex-1">
                 <div className="h-full p-4">
-                  <div className="h-full border border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden bg-white dark:bg-zinc-900">
+                  <div className="card h-full overflow-hidden">
                     <IntegratedWorkspace onCodeChange={handleCodeChange} />
                   </div>
                 </div>
               </div>
-              <div className="w-[450px] border-l border-zinc-200 dark:border-zinc-800">
+              <div className="w-[450px] border-l border-border">
                 <EnhancedCodeReviewPanel
                   code={currentCode}
                   language={currentLanguage}
@@ -169,7 +171,7 @@ export default function MainWorkspace() {
 
       {showHelp && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="w-full max-w-4xl max-h-[80vh] overflow-auto bg-white dark:bg-zinc-900 rounded-lg shadow-xl">
+          <div className="popover w-full max-w-4xl max-h-[80vh] overflow-auto">
             <HelpSystem onClose={() => setShowHelp(false)} />
           </div>
         </div>

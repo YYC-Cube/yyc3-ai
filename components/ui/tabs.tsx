@@ -52,7 +52,7 @@ export function TabsList({ className, ...props }: React.HTMLAttributes<HTMLDivEl
   return (
     <div
       className={cn(
-        "inline-flex h-10 items-center justify-center rounded-md bg-zinc-100 p-1 dark:bg-zinc-800 dark:text-zinc-400 py-1 leading-7 text-[rgba(255,255,255,1)]",
+        "inline-flex h-10 items-center justify-center rounded-md bg-zinc-100 p-1 dark:bg-zinc-800 dark:text-zinc-400 py-1 leading-7 text-[rgba(255,255,255,1)] w-full",
         className
       )}
       {...props}
