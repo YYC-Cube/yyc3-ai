@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { AtomIcon,AtomIcon, X, Maximize2, Minimize2 } from "lucide-react"
+import { AtomIcon, X, Maximize2, Minimize2 } from "lucide-react"
 import Composer from "./Composer"
 import Message from "./Message"
 
@@ -164,8 +164,6 @@ export default function FloatingChat() {
               <div className="flex h-full items-center justify-center">
                 <div className="text-center">
                   <AtomIcon className="mx-auto mb-3 h-12 w-12 text-gray-300" />
-                  
-                  
                 </div>
               </div>
             ) : (
