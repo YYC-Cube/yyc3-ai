@@ -4,17 +4,18 @@ import {
   PanelLeftClose,
   BetweenHorizontalEndIcon,
   SearchIcon,
-  AlignStartHorizontalIcon,Plus,
+  Plus,
   Star,
   BiohazardIcon,
-  CalendarSearchIcon,FolderIcon,
+  FolderIcon,
   FileText,
   Settings,
   ThumbsUpIcon,
-  BadgeHelpIcon,HelpCircle,
-  BlindsIcon,ApertureIcon,Lightbulb,
+  HelpCircle,
+  BellRingIcon,
+  Lightbulb,
   BookOpen,
-  ArrowUpRightFromCircleIcon,Sparkles,
+  Sparkles,
   BarChart3,
 } from "lucide-react"
 import SidebarSection from "./SidebarSection"
@@ -25,7 +26,7 @@ import ThemeToggle from "./ThemeToggle"
 import CreateFolderModal from "./CreateFolderModal"
 import CreateTemplateModal from "./CreateTemplateModal"
 import SearchModal from "./SearchModal"
-import SettingsPopover from "./SettingsPopover"
+import SettingsDialog from "./SettingsDialog"
 import { cls } from "./utils"
 import { useState } from "react"
 import { useLocale } from "@/contexts/LocaleContext"
@@ -55,15 +56,16 @@ export default function Sidebar({
   onUseTemplate = () => {},
   sidebarCollapsed = false,
   setSidebarCollapsed = () => {},
-  onNavigate = () => {}, // 添加导航回调
-  onToggleAIAssistant = () => {}, // 添加AI助手切换回调
-  onToggleLearningPanel = () => {}, // 添加学习面板切换回调
+  onNavigate = () => {},
+  onToggleAIAssistant = () => {},
+  onToggleLearningPanel = () => {},
 }) {
   const { t } = useLocale()
   const [showCreateFolderModal, setShowCreateFolderModal] = useState(false)
   const [showCreateTemplateModal, setShowCreateTemplateModal] = useState(false)
   const [editingTemplate, setEditingTemplate] = useState(null)
   const [showSearchModal, setShowSearchModal] = useState(false)
+  const [showSettingsDialog, setShowSettingsDialog] = useState(false)
 
   const getConversationsByFolder = (folderName) => {
     return conversations.filter((conv) => conv.folder === folderName)
@@ -144,13 +146,13 @@ export default function Sidebar({
           </button>
         </div>
 
-        <div className="flex flex-col items-center gap-4 pt-4">
+        <div className="flex flex-col items-center gap-4 pt-4 my-5">
           <button
             onClick={createNewChat}
             className="rounded-xl p-2 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:hover:bg-zinc-800"
             title={t("sidebar.newChat")}
           >
-            <AlignStartHorizontalIcon className="h-5 w-5 text-[rgba(45,152,160,1)]" />
+            <Plus className="h-5 w-5" />
           </button>
 
           <button
@@ -158,7 +160,7 @@ export default function Sidebar({
             className="rounded-xl p-2 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:hover:bg-zinc-800"
             title={t("common.search")}
           >
-            <SearchIcon className="h-5 w-5 text-[rgba(214,15,15,1)]" />
+            <SearchIcon className="h-5 w-5" />
           </button>
 
           <div className="w-full border-t border-zinc-200/60 dark:border-zinc-800 my-2" />
@@ -168,15 +170,15 @@ export default function Sidebar({
             className="rounded-xl p-2 hover:bg-purple-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 dark:hover:bg-purple-900/30"
             title="AI 代码助手"
           >
-            <ArrowUpRightFromCircleIcon className="h-5 w-5 dark:text-purple-400 text-[rgba(216,14,41,1)]" />
+            <Sparkles className="h-5 w-5 text-purple-600 dark:text-purple-400" />
           </button>
 
           <button
             onClick={onToggleLearningPanel}
             className="rounded-xl p-2 hover:bg-blue-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:hover:bg-blue-900/30"
-            title="智能学习助手"
+            title="AI学习助手"
           >
-            <BlindsIcon className="h-5 w-5 dark:text-blue-400 text-[rgba(43,162,180,1)]" />
+            <BarChart3 className="h-5 w-5 text-blue-600 dark:text-blue-400" />
           </button>
 
           <div className="w-full border-t border-zinc-200/60 dark:border-zinc-800 my-2" />
@@ -186,7 +188,7 @@ export default function Sidebar({
             className="rounded-xl p-2 hover:bg-amber-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 dark:hover:bg-amber-900/30"
             title="提示词库"
           >
-            <ApertureIcon className="h-5 w-5 dark:text-amber-400 text-[rgba(224,12,12,1)]" />
+            <BellRingIcon className="h-5 w-5 dark:text-amber-400 text-[rgba(18,153,173,1)]" />
           </button>
 
           <button
@@ -194,7 +196,7 @@ export default function Sidebar({
             className="rounded-xl p-2 hover:bg-green-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 dark:hover:bg-green-900/30"
             title="学习路径"
           >
-            <BookOpen className="h-5 w-5 dark:text-green-400 text-[rgba(30,150,150,1)]" />
+            <BookOpen className="h-5 w-5 text-green-600 dark:text-green-400" />
           </button>
 
           <button
@@ -202,25 +204,20 @@ export default function Sidebar({
             className="rounded-xl p-2 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:hover:bg-zinc-800"
             title="帮助"
           >
-            <BadgeHelpIcon className="h-5 w-5 text-[rgba(195,28,28,1)]" />
-          </button>
-
-          <button
-            className="rounded-xl p-2 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:hover:bg-zinc-800"
-            title={t("sidebar.folders")}
-          >
-            <CalendarSearchIcon className="h-5 w-5 text-[rgba(50,177,194,1)]" />
+            <HelpCircle className="h-5 w-5 text-[rgba(53,189,216,1)]" />
           </button>
 
           <div className="mt-auto mb-4">
-            <SettingsPopover>
-              <button
-                className="rounded-xl p-2 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:hover:bg-zinc-800"
-                title={t("common.settings")}
-              >
-                <Settings className="h-5 w-5 text-[rgba(50,172,212,1)]" />
-              </button>
-            </SettingsPopover>
+            <button
+              onClick={() => {
+                console.log("[v0] Opening settings dialog from collapsed sidebar")
+                setShowSettingsDialog(true)
+              }}
+              className="rounded-xl p-2 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:hover:bg-zinc-800"
+              title={t("common.settings")}
+            >
+              <Settings className="h-5 w-5 text-[rgba(50,172,212,1)]" />
+            </button>
           </div>
         </div>
       </motion.aside>
@@ -329,7 +326,7 @@ export default function Sidebar({
                   className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
                 >
                   <BarChart3 className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                  <span className="text-zinc-700 dark:text-zinc-300">智能学习助手</span>
+                  <span className="text-zinc-700 dark:text-zinc-300">AI学习助手</span>
                 </button>
 
                 <button
@@ -470,11 +467,15 @@ export default function Sidebar({
 
             <div className="mt-auto border-t border-zinc-200/60 px-3 py-3 dark:border-zinc-800">
               <div className="flex items-center gap-2">
-                <SettingsPopover>
-                  <button className="inline-flex items-center gap-2 rounded-lg px-2 py-2 text-sm hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:hover:bg-zinc-800">
-                    <Settings className="h-4 w-4" /> {t("common.settings")}
-                  </button>
-                </SettingsPopover>
+                <button
+                  onClick={() => {
+                    console.log("[v0] Opening settings dialog from sidebar")
+                    setShowSettingsDialog(true)
+                  }}
+                  className="inline-flex items-center gap-2 rounded-lg px-2 py-2 text-sm hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:hover:bg-zinc-800"
+                >
+                  <Settings className="h-4 w-4" /> {t("common.settings")}
+                </button>
                 <div className="ml-auto">
                   <ThemeToggle theme={theme} setTheme={setTheme} />
                 </div>
@@ -518,6 +519,8 @@ export default function Sidebar({
         togglePin={togglePin}
         createNewChat={createNewChat}
       />
+
+      <SettingsDialog open={showSettingsDialog} onOpenChange={setShowSettingsDialog} />
     </>
   )
 }

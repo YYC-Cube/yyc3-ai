@@ -182,7 +182,7 @@ export default function CodeReviewPanel({ code, language, onApplyFix }: CodeRevi
                 <div className="text-right">
                   <Badge variant={review.score >= 75 ? "default" : "destructive"} className="mb-2">
                     {review.score >= 90
-                      ? "优秀"
+                      ? "优���"
                       : review.score >= 75
                         ? "良好"
                         : review.score >= 60

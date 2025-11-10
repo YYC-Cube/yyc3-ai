@@ -302,7 +302,7 @@ class PromptEngineeringManager {
 测试框架: {{testFramework}}
 
 请生成:
-1. 正常情况测试
+1. 正��情况测试
 2. 边界条件测试
 3. 异常情况测试
 4. 性能测试(如需要)

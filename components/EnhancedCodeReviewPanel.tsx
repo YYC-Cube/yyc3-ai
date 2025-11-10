@@ -156,7 +156,7 @@ export default function EnhancedCodeReviewPanel({
       <div className="flex items-center justify-between p-4 border-b border-zinc-200 dark:border-zinc-800">
         <div className="flex items-center gap-2">
           <FileCode className="h-5 w-5 text-blue-500" />
-          <h3 className="font-semibold">AI 代码审查</h3>
+          <h3 className="font-semibold bg-blue-500 rounded-md px-0 mx-0 text-background text-sm leading-5 tracking-normal text-center">AI 检索 </h3>
           {learningStats && (
             <Badge variant="outline" className="text-xs">
               <TrendingUp className="h-3 w-3 mr-1" />
@@ -165,7 +165,7 @@ export default function EnhancedCodeReviewPanel({
           )}
           <Badge variant="outline" className="text-xs">
             <Cpu className="h-3 w-3 mr-1" />
-            技术栈感知
+            感知
           </Badge>
         </div>
         <div className="flex items-center gap-2">

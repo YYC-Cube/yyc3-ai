@@ -1,7 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogDescription,
+} from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -89,12 +96,16 @@ export default function HelpSystem() {
           帮助
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-3xl max-h-[80vh] overflow-hidden flex flex-col">
+      <DialogContent
+        className="max-w-3xl max-h-[80vh] overflow-hidden flex flex-col"
+        aria-describedby="help-description"
+      >
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <HelpCircle className="h-5 w-5" />
             帮助中心
           </DialogTitle>
+          <DialogDescription id="help-description">查看使用指南、快捷键、教程和常见问题</DialogDescription>
         </DialogHeader>
 
         <Tabs defaultValue="guide" className="flex-1 overflow-hidden flex flex-col">

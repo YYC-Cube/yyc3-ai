@@ -164,15 +164,18 @@ export default function AIAssistantUI() {
     setTimeout(() => {
       setIsThinking(false)
       setThinkingConvId(null)
+
+      const responseText = `我理解了您的问题。让我详细为您解答:\n\n这是一个关于 "${content.slice(0, 20)}..." 的问题。\n\n代码示例:\n\`\`\`javascript\nconst example = () => {\n  console.log("Hello from AI!");\n  return "智能回复示例";\n}\n\`\`\`\n\n希望这个回答对您有帮助!`
+
       setConversations((prev) =>
         prev.map((c) => {
           if (c.id !== currentConvId) return c
-          const ack = `Got it — I'll help with that.`
           const asstMsg = {
             id: Math.random().toString(36).slice(2),
             role: "assistant",
-            content: ack,
+            content: responseText,
             createdAt: new Date().toISOString(),
+            isTyping: true,
           }
           const msgs = [...(c.messages || []), asstMsg]
           return {
@@ -184,7 +187,7 @@ export default function AIAssistantUI() {
           }
         }),
       )
-    }, 2000)
+    }, 1500)
   }
 
   function editMessage(convId, messageId, newContent) {

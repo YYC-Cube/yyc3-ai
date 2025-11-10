@@ -105,7 +105,7 @@ class ContextAnalyzer {
     }
 
     if (analysis.emotionalState === "confused") {
-      return "这个概念确实有点绕。让我们把它拆解成几个小步骤,一步步来理解,会更清晰 📊"
+      return "这个概念确实有点绕。让我们把它拆解成几个小���骤,一步步来理解,会更清晰 📊"
     }
 
     if (this.shouldProactivelyGuide() && analysis.currentTopic) {

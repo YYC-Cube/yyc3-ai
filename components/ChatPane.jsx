@@ -8,7 +8,6 @@ import EmotionalFeedback from "./EmotionalFeedback"
 import { cls, timeAgo } from "./utils"
 import { useLocale } from "@/contexts/LocaleContext"
 import { contextAnalyzer } from "@/lib/context-analyzer"
-import { SymmetricContainer, SymmetricContent } from "./SymmetricContainer"
 import { learningTracker } from "@/lib/learning-tracker"
 
 function ThinkingMessage({ onPause }) {
@@ -100,6 +99,8 @@ const ChatPane = forwardRef(function ChatPane(
     if (!text.trim()) return
     setBusy(true)
 
+    console.log("[v0] Sending message:", text)
+
     contextAnalyzer.addMessage("user", text)
 
     const analysis = contextAnalyzer.analyzeContext()
@@ -116,8 +117,14 @@ const ChatPane = forwardRef(function ChatPane(
       })
     }
 
-    await onSend?.(text)
-    setBusy(false)
+    try {
+      await onSend?.(text)
+      console.log("[v0] Message sent successfully")
+    } catch (error) {
+      console.error("[v0] Error sending message:", error)
+    } finally {
+      setBusy(false)
+    }
   }
 
   const sessionDuration = Date.now() - sessionStart
@@ -125,18 +132,10 @@ const ChatPane = forwardRef(function ChatPane(
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex-1 min-h-0 overflow-y-auto px-4 py-6 sm:px-8 bg-white dark:bg-zinc-900">
-        <div className="mb-2 text-3xl font-serif tracking-tight sm:text-4xl md:text-5xl">
-          
-        </div>
-        <div className="mb-4 text-sm dark:text-zinc-400 text-[rgba(36,36,38,1)] italic underline">
+      <div className="flex-1 min-h-0 overflow-y-auto px-4 py-1 sm:px-8 bg-white dark:bg-zinc-900">
+        <div className="mb-2 text-3xl font-serif tracking-tight sm:text-4xl md:text-5xl"></div>
+        <div className="mb-4 text-sm dark:text-zinc-400 italic underline text-sidebar-ring">
           Updated {timeAgo(conversation.updatedAt)} · {count} messages
-        </div>
-
-        <div className="mb-6 flex flex-wrap gap-2 border-b border-zinc-200 pb-5 dark:border-zinc-800">
-          {tags.map((tag) => (
-            null
-          ))}
         </div>
 
         {messages.length > 0 && (
@@ -145,13 +144,15 @@ const ChatPane = forwardRef(function ChatPane(
 
         {messages.length === 0 ? (
           <div className="rounded-xl border border-dashed border-zinc-300 bg-zinc-50 p-8 text-center text-sm dark:border-zinc-700 dark:bg-zinc-800/50 dark:text-zinc-400 text-[rgba(14,14,188,1)] leading-10">
-            
-            <p className="italic leading-10 text-sm font-normal text-[rgba(190,202,207,1)]">Words convey thousands of lines of code 丨 Language pivots the intelligence of all things</p>
+            <p className="italic leading-10 text-sm font-normal text-[rgba(190,202,207,1)]">
+              Words convey thousands of lines of code 丨 Language pivots the intelligence of all things
+            </p>
           </div>
         ) : (
           <div className="space-y-5">
             {messages.map((m) => (
               <div key={m.id} className="space-y-2">
+                {console.log("[v0] Rendering message:", m.id, m.role, m.content?.substring(0, 30))}
                 {editingId === m.id ? (
                   <div className={cls("rounded-2xl border p-2", "border-zinc-200 dark:border-zinc-800")}>
                     <textarea
@@ -182,8 +183,8 @@ const ChatPane = forwardRef(function ChatPane(
                     </div>
                   </div>
                 ) : (
-                  <Message role={m.role}>
-                    <div className="whitespace-pre-wrap">{m.content}</div>
+                  <Message role={m.role} isTyping={m.isTyping}>
+                    {m.content}
                     {m.role === "user" && (
                       <div className="mt-1 flex gap-2 text-[11px] text-zinc-500">
                         <button className="inline-flex items-center gap-1 hover:underline" onClick={() => startEdit(m)}>
@@ -206,7 +207,7 @@ const ChatPane = forwardRef(function ChatPane(
         )}
       </div>
 
-      <div className="shrink-0 border-t border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="shrink-0 border-t border-zinc-200 bg-white pb-20 pt-4 px-4 sm:px-8 dark:border-zinc-800 dark:bg-zinc-900">
         <Composer ref={composerRef} onSend={handleSend} busy={busy} />
       </div>
     </div>

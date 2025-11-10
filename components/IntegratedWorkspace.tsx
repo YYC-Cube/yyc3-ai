@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
-import { Code2, GraduationCap, Lightbulb, AlertCircle, TrendingUp } from "lucide-react"
+import { Code2, GraduationCapIcon,GraduationCap, Lightbulb, AlertCircle, TrendingUp } from "lucide-react"
 import CodeEditor from "./CodeEditor"
 import LivePreview from "./LivePreview"
 import { aiIntegrationBridge, type AICodeSuggestion, type CodeAnalysisResult } from "@/lib/ai-integration-bridge"
@@ -91,7 +91,7 @@ console.log(greet("World"))`)
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             <Code2 className="h-4 w-4 text-blue-500" />
-            <span className="text-sm font-medium">AI 智能编程工作台</span>
+            <span className="font-medium text-sm text-background rounded-sm bg-blue-700">AI 编程</span>
           </div>
           {analysis && (
             <div className="flex items-center gap-3 text-xs">
@@ -128,15 +128,15 @@ console.log(greet("World"))`)
           <Tabs defaultValue="preview" className="flex-1 flex flex-col">
             <TabsList className="w-full justify-start rounded-none border-b">
               <TabsTrigger value="preview" className="flex-1">
-                <Code2 className="h-3 w-3 mr-1" />
+                <Code2 className="h-3 w-3 mr-1 text-blue-700" />
                 预览
               </TabsTrigger>
               <TabsTrigger value="suggestions" className="flex-1">
-                <Lightbulb className="h-3 w-3 mr-1" />
+                <Lightbulb className="h-3 w-3 mr-1 text-blue-700" />
                 建议 {suggestions.length > 0 && `(${suggestions.length})`}
               </TabsTrigger>
               <TabsTrigger value="learning" className="flex-1">
-                <GraduationCap className="h-3 w-3 mr-1" />
+                <GraduationCapIcon className="h-3 w-3 mr-1 text-blue-700 border-0" />
                 学习
               </TabsTrigger>
             </TabsList>

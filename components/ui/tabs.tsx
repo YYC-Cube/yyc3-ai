@@ -52,7 +52,7 @@ export function TabsList({ className, ...props }: React.HTMLAttributes<HTMLDivEl
   return (
     <div
       className={cn(
-        "inline-flex h-10 items-center justify-center rounded-md bg-zinc-100 p-1 dark:bg-zinc-800 dark:text-zinc-400 py-1 leading-7 text-[rgba(255,255,255,1)] w-full",
+        "inline-flex h-10 items-center justify-center rounded-md p-1 dark:bg-zinc-800 dark:text-zinc-400 py-1 leading-7 text-[rgba(255,255,255,1)] w-auto bg-[rgba(250,250,250,1)]",
         className
       )}
       {...props}
@@ -86,7 +86,7 @@ export function TabsTrigger({ className, value, onClick, ...props }: TabsTrigger
       data-state={isActive ? "active" : "inactive"}
       data-value={value}
       className={cn(
-        "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-white data-[state=active]:text-zinc-950 data-[state=active]:shadow-sm dark:ring-offset-zinc-950 dark:focus-visible:ring-zinc-300 dark:data-[state=active]:bg-zinc-950 dark:data-[state=active]:text-zinc-50 italic border-none",
+        "inline-flex items-center justify-center whitespace-nowrap rounded-sm py-1.5 text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-white data-[state=active]:text-zinc-950 data-[state=active]:shadow-sm dark:ring-offset-zinc-950 dark:focus-visible:ring-zinc-300 dark:data-[state=active]:bg-zinc-950 dark:data-[state=active]:text-zinc-50 italic border-none bg-violet-500 px-3 text-[rgba(250,250,250,1)]",
         className
       )}
       onClick={handleClick}

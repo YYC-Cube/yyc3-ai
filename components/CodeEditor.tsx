@@ -156,7 +156,7 @@ export default function CodeEditor({
             className="rounded-lg p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             title="复制代码"
           >
-            {copied ? <Check className="h-4 w-4 text-green-600" /> : <Copy className="h-4 w-4" />}
+            {copied ? <Check className="h-4 w-4 text-green-600" /> : <Copy className="h-4 w-4 text-blue-800" />}
           </button>
           <button
             onClick={handleDownload}
@@ -164,7 +164,7 @@ export default function CodeEditor({
             className="rounded-lg p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             title="下载文件"
           >
-            <Download className="h-4 w-4" />
+            <Download className="h-4 w-4 text-blue-700" />
           </button>
         </div>
       </div>

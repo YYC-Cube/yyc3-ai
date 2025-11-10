@@ -12,7 +12,6 @@ import LearningPathPlanner from "./LearningPathPlanner"
 import PromptTemplateManager from "./PromptTemplateManager"
 import HelpSystem from "./HelpSystem"
 import FloatingChat from "./FloatingChat"
-import BrandLogo from "./BrandLogo"
 import { useLocale } from "@/contexts/LocaleContext"
 
 export default function MainWorkspace() {
@@ -34,9 +33,7 @@ export default function MainWorkspace() {
   ]
 
   const tabClassName =
-    "nav-item group relative gap-2 rounded-lg px-3 py-2 text-sm transition-all duration-200 " +
-    "data-[state=active]:bg-[hsl(var(--primary))] data-[state=active]:text-[hsl(var(--primary-foreground))] " +
-    "data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:bg-muted"
+    "group relative gap-2 rounded-lg px-3 py-2 text-sm transition-all data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-600 data-[state=inactive]:hover:bg-zinc-100 dark:data-[state=inactive]:text-zinc-400 dark:data-[state=inactive]:hover:bg-zinc-800"
 
   const handleCodeChange = (code: string, language: string) => {
     setCurrentCode(code)
@@ -64,47 +61,45 @@ export default function MainWorkspace() {
   }, [])
 
   return (
-    <div className="h-screen w-full bg-background flex flex-col overflow-hidden">
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col">
-        <div className="h-16 border-b border-border bg-card shrink-0">
-          <div className="w-full h-full px-6">
-            <div className="flex items-center justify-between h-full">
-              <div className="flex items-center gap-4">
-                <FloatingChat />
-                <BrandLogo size="md" showText={true} />
-              </div>
-
-              <button
-                onClick={handleGithubDeploy}
-                className="btn-primary flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
-                title="一键部署到GitHub"
-              >
-                <Github className="icon icon-button" />
-                <span className="font-medium">部署</span>
-              </button>
+    <div className="h-screen w-full bg-zinc-50 dark:bg-zinc-950 flex flex-col overflow-hidden">
+      <header className="sticky top-0 z-50 border-b border-zinc-200 dark:border-zinc-800 shrink-0">
+        <div className="w-full px-4 py-3">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3 shrink-0">
+              <FloatingChat />
+              <h1 className="dark:text-zinc-100 font-medium whitespace-nowrap text-violet-700 text-base italic">
+                万象归元于云栈 | 深耕智启新纪元
+              </h1>
             </div>
+
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 max-w-3xl">
+              <TabsList className="w-full justify-center h-10 rounded-lg p-1 gap-1">
+                {tabs.map((tab) => {
+                  const IconComponent = tab.icon
+                  return (
+                    <TabsTrigger key={tab.value} value={tab.value} className={tabClassName}>
+                      <IconComponent className="h-4 w-4 text-primary-foreground" />
+                      <span className="hidden lg:inline-block">{tab.label}</span>
+                    </TabsTrigger>
+                  )
+                })}
+              </TabsList>
+            </Tabs>
+
+            <button
+              onClick={handleGithubDeploy}
+              className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100 transition-all hover:scale-105 active:scale-95 shrink-0 bg-violet-500"
+              title="一键部署到GitHub"
+            >
+              <Github className="h-4 w-4" />
+              <span className="hidden sm:inline-block">部署</span>
+            </button>
           </div>
         </div>
+      </header>
 
-        <div className="border-b border-border bg-card shrink-0">
-          <div className="w-full px-6">
-            <TabsList className="w-full justify-start h-12 rounded-none bg-transparent gap-2">
-              {tabs.map((tab) => {
-                const IconComponent = tab.icon
-                return (
-                  <TabsTrigger key={tab.value} value={tab.value} className={tabClassName}>
-                    <IconComponent className="icon icon-nav shrink-0" />
-                    <span className="hidden group-hover:inline-block group-data-[state=active]:inline-block transition-all text-sm">
-                      {tab.label}
-                    </span>
-                  </TabsTrigger>
-                )
-              })}
-            </TabsList>
-          </div>
-        </div>
-
-        <div className="flex-1 min-h-0 overflow-hidden">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 min-h-0 overflow-hidden">
+        <div className="h-full w-full">
           <TabsContent value="chat" className="h-full m-0">
             <div className="h-full w-full">
               <AIAssistantUI />
@@ -133,12 +128,12 @@ export default function MainWorkspace() {
             <div className="h-full flex">
               <div className="flex-1">
                 <div className="h-full p-4">
-                  <div className="card h-full overflow-hidden">
+                  <div className="h-full border border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden bg-white dark:bg-zinc-900">
                     <IntegratedWorkspace onCodeChange={handleCodeChange} />
                   </div>
                 </div>
               </div>
-              <div className="w-[450px] border-l border-border">
+              <div className="w-[450px] border-l border-zinc-200 dark:border-zinc-800">
                 <EnhancedCodeReviewPanel
                   code={currentCode}
                   language={currentLanguage}
@@ -171,7 +166,7 @@ export default function MainWorkspace() {
 
       {showHelp && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="popover w-full max-w-4xl max-h-[80vh] overflow-auto">
+          <div className="w-full max-w-4xl max-h-[80vh] overflow-auto bg-white dark:bg-zinc-900 rounded-lg shadow-xl">
             <HelpSystem onClose={() => setShowHelp(false)} />
           </div>
         </div>

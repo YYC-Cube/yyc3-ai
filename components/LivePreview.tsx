@@ -81,7 +81,7 @@ export default function LivePreview({ code, language, autoRefresh = true }: Live
       {/* 工具栏 */}
       <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-2 dark:border-zinc-800">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">实时预览</span>
+          <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">预览</span>
           {isRefreshing && <RefreshCw className="h-3.5 w-3.5 animate-spin text-zinc-400" />}
           <span className="text-xs text-zinc-500">更新于 {lastUpdate.toLocaleTimeString("zh-CN")}</span>
         </div>
@@ -98,7 +98,7 @@ export default function LivePreview({ code, language, autoRefresh = true }: Live
                   className={`rounded p-1.5 ${deviceMode === mode ? "bg-zinc-100 dark:bg-zinc-800" : "hover:bg-zinc-50 dark:hover:bg-zinc-800/50"}`}
                   title={mode}
                 >
-                  <Icon className="h-3.5 w-3.5" />
+                  <Icon className="h-3.5 w-3.5 text-blue-700" />
                 </button>
               )
             })}
@@ -109,12 +109,12 @@ export default function LivePreview({ code, language, autoRefresh = true }: Live
             className="rounded-lg p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800"
             title="手动刷新"
           >
-            <RefreshCw className="h-4 w-4" />
+            <RefreshCw className="h-4 w-4 text-blue-700" />
           </button>
 
           <button
             onClick={toggleFullscreen}
-            className="rounded-lg p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+            className="rounded-lg p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-[rgba(231,27,27,1)]"
             title={isFullscreen ? "退出全屏" : "全屏"}
           >
             {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
